@@ -1,0 +1,244 @@
+openapi: 3.0.0
+info:
+  title: Ticket Management System API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api
+paths:
+  /users:
+    get:
+      summary: Get a list of users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+              example:
+                - id: 1
+                  name: John Doe
+                - id: 2
+                  name: Jane Doe
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+            example:
+              name: John Doe
+        description: User information to create
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              example:
+                id: 1
+                name: John Doe
+  /users/{userId}:
+    get:
+      summary: Get a user by ID
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              example:
+                id: 1
+                name: John Doe
+        '404':
+          description: User not found
+    put:
+      summary: Update a user by ID
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+            example:
+              name: John Smith
+        description: User information to update
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              example:
+                id: 1
+                name: John Smith
+        '404':
+          description: User not found
+    delete:
+      summary: Delete a user by ID
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: User not found
+  /tickets:
+    get:
+      summary: Get a list of tickets
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticket'
+    post:
+      summary: Create a new ticket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketRequest'
+        description: Ticket information to create
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+  /tickets/{ticketId}:
+    get:
+      summary: Get a ticket by ID
+      parameters:
+        - in: path
+          name: ticketId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '404':
+          description: Ticket not found
+    put:
+      summary: Update a ticket
+      parameters:
+        - in: path
+          name: ticketId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketRequest'
+        description: Ticket information to update
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '404':
+          description: Ticket not found
+    delete:
+      summary: Delete a ticket
+      parameters:
+        - in: path
+          name: ticketId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No Content
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+      required:
+        - id
+        - name
+    UserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    Ticket:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          minLength: 1
+          maxLength: 1024
+        author_user_id:
+          type: integer
+        assigned_user_id:
+          type: integer
+          nullable: true
+    TicketRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          minLength: 1
+          maxLength: 1024
+        author_user_id:
+          type: integer
+        assigned_user_id:
+          type: integer
+          nullable: true

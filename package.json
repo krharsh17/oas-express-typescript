@@ -1,0 +1,39 @@
+{
+  "name": "oas-express-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon",
+    "generate": "npx openapi-to-zod -i 'openapi.yaml' -o './src/schemas'",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "jest": "^29.5.0",
+    "jest-openapi": "^0.14.2",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.0.5",
+    "zod": "^3.21.4",
+    "zod-express-middleware": "^1.4.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.0",
+    "@types/supertest": "^2.0.12",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.2"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts",
+    "exec": "ts-node src/index.ts"
+  }
+}
