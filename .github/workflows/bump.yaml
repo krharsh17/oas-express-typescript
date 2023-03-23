@@ -11,11 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-     uses: actions/checkout@v2
+        uses: actions/checkout@v2
       - name: Deploy API documentation
-     uses: bump-sh/github-action@v1
-     with:
-         doc: ca5ac120-0c0b-49cd-9f61-9c2186878543
-         token: ${{secrets.BUMP_TOKEN}}
-         file: openapi.yaml
-
+        uses: bump-sh/github-action@v1
+        with:
+          doc: ca5ac120-0c0b-49cd-9f61-9c2186878543
+          token: ${{secrets.BUMP_TOKEN}}
+          file: openapi.yaml
